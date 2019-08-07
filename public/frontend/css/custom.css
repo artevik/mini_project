@@ -1,0 +1,44 @@
+/* your styles go here */
+
+.card {
+    background: #efefef;
+    padding: 10px 10px 0px;
+}
+.card.reply {
+    background: #ffffff;
+}
+.comment-reply{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-flow: column;
+    flex-basis: 50px;
+}
+p.btn-collapse{
+    margin: 0;
+    background: #6982a9;
+    padding: 7px 15px;
+    border-radius: 5px;
+    border:1px solid #6982a9;
+}
+p.btn-collapse a{
+    color: #ffffff;
+}
+p.btn-collapse:hover{
+    background: #ffffff;
+    border:1px solid #6982a9;
+}
+p.btn-collapse:hover a{
+    color: #6982a9;
+}
+.btn-reply{
+    background: #6982a9;
+    border:1px solid #6982a9;
+    border-radius: 5px !important;
+}
+.btn-reply:hover{
+    background: #ffffff;
+    border:1px solid #6982a9;
+    color: #6982a9;
+    margin: 0;
+}
