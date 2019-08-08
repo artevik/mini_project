@@ -23,7 +23,7 @@
                                 <div class="category"><a href="#"> {{$post->comments->count()}} <i class="icon-comment"></i> </a></div>
                             </div><a href="{{route('showPost', $post->id)}}">
                                 <h3 class="h4">{{$post['title']}}</h3></a>
-                            <p class="text-muted">{{$post['description']}}</p>
+                            <p class="text-muted">@if(mb_strlen($post['description'],'UTF-8') > 250) {{substr($post['description'], 0, 250)}}... @else {{$post['description']}}@endif</p>
                         </div>
                     </div>
 

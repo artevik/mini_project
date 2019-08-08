@@ -11,9 +11,10 @@
                         <div class="post-thumbnail"><img src="@if(strpos($post['image'], 'http') === 0) {{$post['image']}} @else {{url('/')}}/uploads/images/{{$post['image']}} @endif" alt="..." class="img-fluid"></div>
                         <div class="post-details">
                             <h1>{{$post->title}}<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
+
                             <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
-                                <a href="#" class="author d-flex align-items-center flex-wrap">
-                                    <div class="avatar"><img src="@if($post->user[0]->image !== null){{$post->user[0]->image}}@else{{asset('frontend/img/avatar-1.jpg')}} @endif" alt="..." class="img-fluid"></div>
+                                <a href="{{route('profile')}}" class="author d-flex align-items-center flex-wrap">
+                                    <div class="avatar"><img src="@if(isset($post->user[0]->profile_image)){{$post->user[0]->profile_image}}@else{{asset('frontend/img/avatar-1.jpg')}} @endif" alt="..." class="img-fluid"></div>
                                     <div class="title"><span>{{$post->user[0]->name}}</span></div>
                                 </a>
                                 <div class="d-flex align-items-center flex-wrap">
@@ -57,19 +58,17 @@
                                     <form class="sorting">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="sortByDate">Сортировка: </label>
                                             <select class="form-control col-md-2" id="sortByDate" name="sortByDate">
                                                 <option value="asc" data-value="Новые">Сначало новые</option>
                                                 <option value="desc" data-value="Старые">Сначало старые</option>
                                             </select>
                                         </div>
                                     </form>
-
                                     @component('frontend.partials.comments.reply.show', [
                                                     'comments' => $post->comments()->where('id_parent_comment', '=', 0)->get(),
                                                     'post' => $post,
                                                     'parent_id' => true,
-                                                    'owner_id' => 0
+                                                    'owner_id' => $users
                                                     ])
                                                     @slot('class')
                                                         main
@@ -84,20 +83,27 @@
                             </div>
 
                             <div class="add-comment">
+
                                 @if(Auth::check())
-                                    @component('frontend.components.form')
-                                        @slot('title')
-                                            Оставить отзыв
-                                        @endslot
-                                        @slot('action')
-                                            {{route('comments.store', $post->id)}}
-                                        @endslot
-                                        @slot('submit')
-                                            Отправить сообщение
-                                        @endslot
-                                    @endcomponent
+
+                                    @if(Route::has('login'))
+                                        @component('frontend.components.form-auth', ['post' => $post, 'comment' => 0])
+                                    @else
+                                        @component('frontend.components.form')
+                                             @slot('title')
+                                                        Комментируем сообщение пользователя <small>{{$comment->name}}</small>
+                                             @endslot
+                                    @endif
+                                                    @slot('action')
+                                                        {{route('comments.store', $post->id)}}
+                                                    @endslot
+
+                                                    @slot('submit')
+                                                        Комментировать
+                                                    @endslot
+                                         @endcomponent
                                 @else
-                                    Для того чтобы оставить сообщение <a href="{{route('login')}}">авторизируйтесь</a> или пройдите <a href="{{route('register')}}">регистрацию</a>
+                                   Для того чтобы оставить сообщение <a href="{{route('login')}}">авторизируйтесь</a> или пройдите <a href="{{route('register')}}">регистрацию</a>
                                 @endif
                             </div>
 
@@ -153,7 +159,7 @@
                 data: formData,
                 dataType: 'json',
                 beforeSend:function(xhr){
-                    $('#response').text('Загружаю...'); // изменяем текст кнопки
+                    $('#response').text('Загружаю...');
                 },
                 success : function( data ) {
                     $('#response').html(data);

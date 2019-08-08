@@ -14,8 +14,11 @@ class Comment extends Model
         'published_at',
     ];
 
-    public function user(){
-        return $this->hasMany(User::class, 'id', 'id');
+    public function user() {
+        return $this->belongsToMany(
+            'App\User',
+            'user_comments'
+        );
     }
 
     public function posts() {

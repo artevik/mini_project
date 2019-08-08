@@ -830,6 +830,7 @@ section.latest-posts header {
   font-weight: 400;
   color: #777;
   font-size: 0.95em;
+    word-break: break-word;
 }
 
 .post a {

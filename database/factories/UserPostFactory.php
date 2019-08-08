@@ -7,9 +7,9 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\UserPost::class, function (Faker $faker) {
     $user = \App\User::pluck('id')->toArray();
-    $post = \App\Post::pluck('id')->toArray();
+    //$post = \App\Post::pluck('id');
     return [
         'id_user' => $faker->randomElement($user),
-        'id_post' => $faker->randomElement($post)
+        'id_post' => factory('App\Post')->create()->id
     ];
 });

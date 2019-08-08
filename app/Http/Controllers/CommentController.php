@@ -6,6 +6,7 @@ use App\Comment;
 use App\Post;
 use App\PostComment;
 use App\Rules\Captcha;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -42,7 +43,6 @@ class CommentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' 		=> 'required|max:120',
-            'email' 	=> 'required|email|max:191',
             'comment' 	=> 'required|min:5|max:2000',
             /*'g-recaptcha-response' => ['required', new Captcha]*/
         ]);
@@ -67,11 +67,14 @@ class CommentController extends Controller
             return redirect()->route('showPost', $post_id)->with($notification);
         }
 
+        if(Auth::user()){
+            $user = User::findOrFail(Auth::user()->id);
+        }
+
         $post = Post::findOrFail($post_id);
 
         $comment = new Comment();
         $comment->name 		    = $request['name'];
-        $comment->email 	    = $request['email'];
         $comment->comment 	    = $request['comment'];
         $comment->approved 	    = 1;
         $comment->published_at 	= date("Y-m-d H:i:s");
@@ -92,8 +95,9 @@ class CommentController extends Controller
             $post_comment->timestamps = date("Y-m-d H:i:s");
 
             $post_comment->save();
-        } else {
-            $post->comments()->attach($comment->id, ['id_parent_comment' => $request->parent_id]);
+
+            //$post->comments()->attach($comment->id, ['id_parent_comment' => $request->parent_id]);
+            $user->comments()->attach($comment->id);
         }
 
         $notification = array(

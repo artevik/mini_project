@@ -6,9 +6,9 @@
             <div class="comment" id="comment_{{$comment->id}}">
                 <div class="comment-header d-flex justify-content-between">
                     <div class="user d-flex align-items-center">
-                        <div class="image"><img src="{{asset('frontend/img/user.svg')}}" alt="..." class="img-fluid rounded-circle"></div>
+                        <div class="image"><img src="@if(isset($comment->user[0]->profile_image)){{$comment->user[0]->profile_image}}@else{{asset('frontend/img/user.svg')}}@endif" alt="..." class="img-fluid rounded-circle"></div>
                         <div class="title">
-                            <strong>{{$comment->name}} <small>({{$comment->email}})</small></strong>
+                            <strong>{{$comment->name}} <small>({{$post->user[0]->email}})</small></strong>
                             <span class="date">{{$comment->published_at}}</span>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                                                    'comments' => $post->comments()->where('id_parent_comment', '=', $comment->id)->get(),
                                                    'post' => $post,
                                                    'parent_id' => true,
-                                                   'owner_id' => $comment->id
+                                                   'owner_id' => 0
                                                    ])
                 @slot('class')
                     reply

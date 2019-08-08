@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Post;
 use App\PostComment;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -103,13 +104,16 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $posts = Post::paginate();
 
+        $user = User::where('id', $post->user)->get();
+
         if(isset($request->sortByDate)){
             return response()->json($request->sortByDate);
         }
 
         return view('frontend.page.show', [
             'post' => $post,
-            'posts' => $posts
+            'posts' => $posts,
+            'users' => $user
         ]);
     }
 

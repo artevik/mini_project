@@ -48,6 +48,15 @@ class User extends Authenticatable
         );
     }
 
+    public function comments() {
+        return $this->belongsToMany(
+            'App\Comment',
+            'user_comments',
+            'user_id',
+            'comment_id'
+        );
+    }
+
     public function getImageAttribute(){
         return $this->profile_image;
     }
