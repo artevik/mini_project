@@ -10,6 +10,6 @@ $factory->define(\App\Post::class, function (Faker $faker) {
         'image' => $faker->imageUrl($width = 640, $height = 480, 'cats'),
         'slug' => $faker->slug(3),
         'approved' => $faker->randomElement(($array = array ('1','0'))),
-        'published_at' => date("Y-m-d H:i:s"),
+        'published_at' => \Carbon\Carbon::now(),
     ];
 });

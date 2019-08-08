@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;;
 
 class PostController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('approved', 1)->paginate(9);
+        $posts = Post::where('approved', 1)->paginate(15);
 
         return view('frontend.main', ['posts' => $posts]);
     }
@@ -101,21 +102,13 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $posts = Post::paginate();
-        $comments = Comment::all()->where('approved', 1);
 
         if(isset($request->sortByDate)){
-
-            if($request->sortByDate === 'desc'){
-            }
-            if($request->sortByDate === 'asc'){
-            }
-
             return response()->json($request->sortByDate);
         }
 
         return view('frontend.page.show', [
             'post' => $post,
-            'comments' => $comments,
             'posts' => $posts
         ]);
     }

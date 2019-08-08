@@ -20,7 +20,6 @@ Route::get('posts/{id}/edit', 'PostController@edit')->name('editPost');
 //Comments
 Route::post('comment/{post_id}', ['as' => 'comments.store', 'uses' => 'CommentController@store']);
 Route::post('comment/reply', 'CommentController@replyStore')->name('reply.add');
-
 Route::post('posts/{id}/sort', 'PostController@show')->name('comments.sort');
 
 Auth::routes();

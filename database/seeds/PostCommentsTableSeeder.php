@@ -11,6 +11,6 @@ class PostCommentsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\PostComment::class, 20)->create();
+        factory(\App\PostComment::class, 31)->create();
     }
 }

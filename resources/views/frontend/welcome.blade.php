@@ -56,6 +56,7 @@
     <script src="{{asset('frontend/vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
     <script src="{{asset('frontend/vendor/@fancyapps/fancybox/jquery.fancybox.min.js')}}"></script>
     <script src="{{asset('frontend/js/front.js')}}"></script>
+    <script src="{{asset('frontend/js/post-ajax.js')}}"></script>
 
     @stack('scripts')
     </body>

@@ -40,7 +40,12 @@ class User extends Authenticatable
     ];
 
     public function posts() {
-        return $this->belongsToMany(Post::class);
+        return $this->belongsToMany(
+            'App\Post',
+            'user_posts',
+            'id_user',
+            'id_post'
+        );
     }
 
     public function getImageAttribute(){

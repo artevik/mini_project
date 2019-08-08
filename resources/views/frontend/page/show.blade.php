@@ -160,9 +160,7 @@
                     console.log(data);
                 },
                 error: function (data, textStatus, errorThrown) {
-                    console.log('Data: ' + data);
-                    console.log('Status: ' + textStatus);
-                    console.log('Error: ' + errorThrown);
+                    console.log(data);
                 },
             });
             return false;

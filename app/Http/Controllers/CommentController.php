@@ -111,7 +111,7 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comments)
+    public function show(Comment $comments, $id)
     {
         //
     }
